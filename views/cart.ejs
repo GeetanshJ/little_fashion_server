@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #212529;
+        }
+
+        a.navbar-brand {
+            text-decoration: none;
+            color: #212529;
+            font-size: 28px;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        a.navbar-brand span {
+            color: #0d6efd;
+        }
+
+        h3 {
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #212529;
+            text-align: center;
+        }
+
+        .cart-wrapper {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1 1 600px;
+            max-width: 700px;
+        }
+
+        .cart-item {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .cart-item img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .cart-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 15px;
+            color: #495057;
+        }
+
+        .cart-details strong {
+            color: #212529;
+        }
+
+        .delete-form {
+            margin-top: auto;
+            align-self: flex-end;
+        }
+
+        .delete-form button {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-form button:hover {
+            background-color: #c82333;
+        }
+
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            max-width: 350px;
+            flex: 1 1 300px;
+            height: fit-content;
+            align-self: flex-start;
+        }
+
+        .summary-card h4 {
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #0d6efd;
+            font-weight: 700;
+        }
+
+        .summary-card span {
+            font-weight: bold;
+            font-size: 22px;
+            color: #212529;
+        }
+
+        .checkout-btn {
+            margin-top: 20px;
+            display: inline-block;
+            background-color: #198754;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .checkout-btn:hover {
+            background-color: #157347;
+        }
+
+        .message {
+            margin-top: 30px;
+            padding: 16px 20px;
+            background-color: #e0f2ff;
+            border-left: 6px solid #3b82f6;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #1e3a8a;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .message-success {
+            background-color: #dcfce7;
+            border-left-color: #22c55e;
+            color: #065f46;
+        }
+
+        .message-error {
+            background-color: #fee2e2;
+            border-left-color: #ef4444;
+            color: #991b1b;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        p {
+            font-size: 16px;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .cart-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cart-container,
+            .summary-card {
+                max-width: 95%;
+                width: 100%;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .cart-item img {
+                width: 100%;
+                height: 200px;
+            }
+
+            .cart-details {
+                align-items: center;
+            }
+
+            .delete-form {
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="navbar-brand" href="/">
+        <strong><span>Little</span> Fashion</strong>
+    </a>
+
+    <h3>Your Cart</h3>
+
+    <% let total = 0; %>
+    <% if (cartItems && cartItems.length > 0) { %>
+
+        <div class="cart-wrapper">
+            <div class="cart-container">
+                <% for (let i = 0; i < cartItems.length; i++) { total += cartItems[i].qty * cartItems[i].price; %>
+                    <div class="cart-item">
+                        <img src="/product_images/<%= cartItems[i].image %>" alt="Product Image" />
+                        <div class="cart-details">
+                            <div><strong>Name:</strong> <%= cartItems[i].name %></div>
+                            <div><strong>Description:</strong> <%= cartItems[i].description %></div>
+                            <div><strong>Price:</strong> $<%= cartItems[i].price %></div>
+                            <div><strong>Qty:</strong> <%= cartItems[i].qty %></div>
+                            <form class="delete-form" action="/deleteCartItem/<%= cartItems[i].id %>" method="POST">
+                                <button type="submit">🗑 Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="summary-card">
+                <h4>Order Summary</h4>
+                <div>Total Price: <span>$<%= total %></span></div>
+                <a href="/checkout/address" class="checkout-btn">Proceed to Checkout</a>
+            </div>
+        </div>
+    <% } else { %>
+        <p>Your cart is empty.</p>
+    <% } %>
+
+
+    <% if (cartMessage) { %>
+        <div class="message message-success">
+                <%= cartMessage %>
+        </div>
+    <% } %>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Headroom.js"></script>
+    <script src="js/jQuery.headroom.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+
+</html>

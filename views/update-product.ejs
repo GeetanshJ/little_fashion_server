@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Product</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form method="post" action="/modifyProduct/<%=item_id %>" enctype="multipart/form-data" >
+        <div>
+          <label for="name">Product Name</label>
+          <input type="text" name="name" id="name" />
+        </div>
+      
+        <div>
+          <label for="description">Description</label>
+          <input type="text" name="description" id="description" />
+        </div>
+      
+        <div>
+          <label for="price">Price</label>
+          <input type="number" name="price" id="price" />
+        </div>
+      
+        <div>
+          <label for="qty">Product Qty</label>
+          <input type="number" name="qty" id="qty" />
+        </div>
+
+        <div>
+          <label for="image">Product Image</label>
+          <input type="file" name="image" id="image" />
+        </div>
+      
+        <button type="submit">Update Product</button>
+      </form>
+      
+  </div>
+</body>
+</html>

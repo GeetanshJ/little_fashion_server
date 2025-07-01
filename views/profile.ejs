@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet" />
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/slick.css" />
+  <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <section class="preloader">
+    <div class="spinner">
+      <span class="sk-inner-circle"></span>
+    </div>
+  </section>
+
+  <main>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="/">
+          <strong><span>Little</span> Fashion</strong>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <%- include('header-site-map.ejs') %>
+        </div>
+      </div>
+    </nav>
+
+    <section class="contact section-padding">
+      <div class="container">
+        <div class="row">
+
+          <!-- Profile Update Section -->
+          <div class="col-12">
+            <h2>Update Your Profile</h2>
+            <form action="/updateProfile" method="POST" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" name="firstname" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" name="lastname" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="zip">Zip Code</label>
+                <input type="text" id="zip" name="zip" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="profile">Profile Picture</label>
+                <input type="file" id="profile" name="profile" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="password">New Password</label>
+                <input type="password" id="password" name="password" class="form-control">
+              </div>
+
+              <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+
+
+            <% if (updateDataMessage) { %>
+              <div class="alert alert-info mt-3">
+                <%= updateDataMessage %>
+              </div>
+              <% } %>
+          </div>
+
+          <% if (orderHistory && orderHistory.length> 0) { %>
+            <div class="col-12 mt-5">
+              <h3>Your Order History</h3>
+              <% orderHistory.forEach(item=> { let total_price = 0;%>
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <p><strong>Customer:</strong>
+                      <%= item.firstname %>
+                        <%= item.lastname %>
+                    </p>
+                    <p><strong>Email:</strong>
+                      <%= item.user_email %>
+                    </p>
+                    <p><strong>Address:</strong>
+                      <%= item.address %>, <%= item.city %>, <%= item.state %> - <%= item.zip %>, <%= item.country %>
+                    </p>
+                    <p><strong>Phone:</strong>
+                      <%= item.phone %>
+                    </p>
+                    <p><strong>Status:</strong>
+                      <%= item.status %>
+                    </p>
+                    <p><strong>Date:</strong>
+                      <%= item.order_date %>
+                    </p>
+
+                    <div class="order-items">
+                      <% if (item.Orders_Details && item.Orders_Details.length> 0) { %>
+                        <h5>Order Items:</h5>
+                        <% item.Orders_Details.forEach(detail=> { %>
+                          <div class="card mb-2">
+                            <div class="card-body">
+                              <p><strong>Item Name:</strong>
+                                <%= detail.name %>
+                              </p>
+                              <p><strong>Quantity:</strong>
+                                <%= detail.qty %>
+                              </p>
+                              <p><strong>Price:</strong> ₹<%= detail.price %>
+                              </p>
+                              <p><strong>Total Price:</strong> ₹<%= detail.qty * detail.price %>
+                                <%total_price += detail.qty * detail.price%>
+                              </p>
+                            </div>
+                          </div>
+                          <% }); %>
+                            <% } else { %>
+                              <p>No items found for this order.</p>
+                              <% } %>
+                    </div>
+
+                    <p><strong>Total Order Price:</strong> $<%= total_price %>
+                    </p>
+                  </div>
+                </div>
+                <% }); %>
+            </div>
+            <% } else { %>
+              <div class="col-12 mt-5">
+                <p>No orders found.</p>
+              </div>
+              <% } %>
+
+
+
+
+
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-10 me-auto mb-4">
+                    <h4 class="text-white mb-3"><a href="/">Little</a> Fashion</h4>
+                    <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">Copyright © 2025 <strong>Little
+                            Fashion</strong></p>
+                    <br>
+                    <p class="copyright-text">Designed by Geetansh Jain</p>
+                </div>
+
+                <div class="col-lg-5 col-8">
+                    <h5 class="text-white mb-3">Sitemap</h5>
+
+                    <%- include('footer-site-map.ejs')%>
+
+                </div>
+
+                <div class="col-lg-3 col-4">
+                    <h5 class="text-white mb-3">Social</h5>
+
+                    <%- include('social-icons.ejs')%>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/Headroom.js"></script>
+  <script src="js/jQuery.headroom.js"></script>
+  <script src="js/slick.min.js"></script>
+  <script src="js/custom.js"></script>
+
+</body>
+
+</html>

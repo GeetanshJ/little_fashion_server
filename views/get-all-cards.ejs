@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saved Cards</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fa;
+        margin: 0;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .card-container {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .card-option {
+        background: #ffffff;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+      }
+
+      .card-option:hover {
+        border-color: #007bff;
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
+      }
+
+      .card-option input[type="radio"] {
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #007bff;
+        border-radius: 50%;
+        margin-right: 20px;
+        position: relative;
+        top: -1px;
+        outline: none;
+        cursor: pointer;
+      }
+
+      .card-option input[type="radio"]:checked {
+        background-color: #007bff;
+      }
+
+      .card-details {
+        flex: 1;
+      }
+
+      .card-details div {
+        margin-bottom: 5px;
+        font-size: 15px;
+        color: #333;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .submit-btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card-container">
+      <h2>Select a Saved Card</h2>
+
+      <form action="/checkout/order/card/<%=addressId%>" method="POST">
+        <% for(let i = 0; i < cards.length; i++) { %>
+        <label class="card-option">
+          <input hidden
+            type="radio"
+            name="selectedCard"
+            value="<%= cards[i].customerPaymentProfileId %>"
+            required
+          />
+          
+          <input
+            type="radio"
+            name="cardNumber"
+            value="<%= cards[i].payment.creditCard.cardNumber %>"
+            required
+          />
+
+          <div class="card-details">
+            <div>
+              <strong>Card Number:</strong> <%=
+              cards[i].payment.creditCard.cardNumber %>
+            </div>
+            <div>
+              <strong>Card Company:</strong> <%=
+              cards[i].payment.creditCard.cardType %>
+            </div>
+          </div>
+        </label>
+        <% } %>
+
+        <button class="submit-btn" type="submit">Use Selected Card</button>
+      </form>
+    </div>
+  </body>
+</html>

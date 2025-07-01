@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders List</title>
+    <style>
+        .container {
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order{
+            margin-top: 150px;
+        }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/slick.css" />
+
+    <link href="/css/tooplate-little-fashion.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <strong><span>Little</span> Fashion</strong>
+            </a>
+        </div>
+    </nav>
+
+<section class="order">
+  <% if (allOrders) { %>
+    <% for (let i = 0; i < allOrders.length; i++) { 
+         let order = allOrders[i]; 
+    %>
+      <form action="/updateOrderStatus" method="POST">
+        <div>Order ID: <%= order.id %></div>
+
+        <input type="hidden" name="orderId" value="<%= order.id %>" />
+
+        <select name="status" required>
+          <% for (let i = 0; i < statusOptions.length; i++) { %>
+            <option value="<%= statusOptions[i] %>" <%= order.status === statusOptions[i] ? 'selected' : '' %>>
+              <%= statusOptions[i] %>
+            </option>
+          <% }; %>
+        </select>
+
+        <button type="submit">Update Status</button>
+      </form>
+      <hr />
+    <% } %>
+  <% } else { %>
+    <div>No Orders</div>
+  <% } %>
+</section>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/Headroom.js"></script>
+    <script src="/js/jQuery.headroom.js"></script>
+    <script src="/js/slick.min.js"></script>
+    <script src="/js/custom.js"></script>
+</body>
+
+</html>

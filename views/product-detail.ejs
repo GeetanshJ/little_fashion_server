@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Little Fashion - Product Detail</title>
+
+    <!-- Google Fonts and CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/css/tooplate-little-fashion.css" rel="stylesheet" />
+
+    <style>
+      :root {
+        --primary-color: #0d6efd;
+        --secondary-color: #6c757d;
+        --bg-color: #f8f9fa;
+        --text-dark: #212529;
+        --text-light: #6c757d;
+        --font-family: "Inter", sans-serif;
+      }
+
+      body {
+        font-family: var(--font-family);
+        background-color: var(--bg-color);
+        color: var(--text-dark);
+        margin: 0;
+      }
+
+      .navbar {
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .navbar-brand {
+        font-weight: 900;
+        font-size: 24px;
+        color: var(--primary-color);
+      }
+
+      .site-header {
+        background: linear-gradient(to right, #f0f0f0, #ffffff);
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      .site-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .product-detail {
+        padding: 60px 0;
+        background-color: #ffffff;
+      }
+
+      .product-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-price {
+        font-size: 1.25rem;
+        color: var(--primary-color);
+        font-weight: 700;
+      }
+
+      .product-description p {
+        font-size: 1rem;
+        color: var(--text-light);
+      }
+
+      .product-cart-thumb {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      #subQty,
+      #addQty {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--primary-color);
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      #subQty:hover,
+      #addQty:hover {
+        background-color: #0056b3;
+      }
+
+      #itemQty {
+        font-size: 18px;
+        font-weight: 600;
+        width: 40px;
+        text-align: center;
+      }
+
+      .cart-btn {
+        background-color: var(--primary-color);
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 30px;
+        transition: background-color 0.3s ease;
+      }
+
+      .cart-btn:hover {
+        background-color: #0056b3;
+      }
+
+      footer.site-footer {
+        background-color: #343a40;
+        color: white;
+        padding: 60px 0;
+      }
+
+      footer a {
+        color: #adb5bd;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        color: var(--primary-color);
+      }
+
+      @media (max-width: 768px) {
+        .product-cart-thumb {
+          flex-direction: row;
+          justify-content: flex-start;
+        }
+        .site-header h1 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <% var qty = 0; %>
+    <section class="preloader">
+      <div class="spinner">
+        <span class="sk-inner-circle"></span>
+      </div>
+    </section>
+
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="/">Little <span>Fashion</span></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <%- include('header-site-map.ejs') %>
+          <div class="d-lg-none mt-3">
+            <a href="/sign-in" class="bi-person me-3"></a>
+            <a href="/cart" class="bi-bag"></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <header class="site-header">
+      <div class="container">
+        <h1>
+          <span class="text-primary">We provide you</span><br />
+          <span class="text-dark">Fashionable Stuffs</span>
+        </h1>
+      </div>
+    </header>
+
+    <section class="product-detail">
+      <form action="/addCartItem/<%=item.id%>" method="POST">
+        <input type="hidden" name="name" value="<%= item.name %>" />
+        <input
+          type="hidden"
+          name="description"
+          value="<%= item.description %>"
+        />
+        <input type="hidden" name="price" value="<%= item.price %>" />
+        <input type="hidden" name="image" value="<%= item.image %>" />
+        <input type="hidden" id="cartQty" name="qty" value="1" />
+
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <div class="product-thumb">
+                <img
+                  height="450px"
+                  width="350px"
+                  src="/product_images/<%= item.image %>"
+                  alt="<%= item.name %>"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <h2 class="product-title"><%= item.name %></h2>
+              <div class="product-price mb-3">
+                $<span id="price"><%= item.price %></span>
+              </div>
+              <div class="product-description mb-4">
+                <p><%= item.description %></p>
+              </div>
+
+              <div class="product-cart-thumb">
+                <strong>Quantity</strong>
+                <div id="subQty">-</div>
+                <p id="itemQty">1</p>
+                <div id="addQty">+</div>
+              </div>
+
+              <button type="submit" class="cart-btn mt-4">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-10 me-auto mb-4">
+                    <h4 class="text-white mb-3"><a href="/">Little</a> Fashion</h4>
+                    <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">Copyright © 2025 <strong>Little
+                            Fashion</strong></p>
+                    <br>
+                    <p class="copyright-text">Designed by Geetansh Jain</p>
+                </div>
+
+                <div class="col-lg-5 col-8">
+                    <h5 class="text-white mb-3">Sitemap</h5>
+
+                    <%- include('footer-site-map.ejs')%>
+
+                </div>
+
+                <div class="col-lg-3 col-4">
+                    <h5 class="text-white mb-3">Social</h5>
+
+                    <%- include('social-icons.ejs')%>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Files -->
+    <script>
+      const cartQty = document.getElementById("cartQty");
+      const itemQty = document.getElementById("itemQty");
+      const addQty = document.getElementById("addQty");
+      const subQty = document.getElementById("subQty");
+
+      addQty.addEventListener("click", () => {
+        let currentQty = parseInt(itemQty.textContent);
+        itemQty.textContent = currentQty + 1;
+        cartQty.value = currentQty + 1;
+      });
+
+      subQty.addEventListener("click", () => {
+        let currentQty = parseInt(itemQty.textContent);
+        if (currentQty > 1) {
+          let currentQty = parseInt(itemQty.textContent);
+          itemQty.textContent = currentQty - 1;
+          cartQty.value = currentQty - 1;
+        }
+      });
+    </script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/Headroom.js"></script>
+    <script src="/js/jQuery.headroom.js"></script>
+    <script src="/js/slick.min.js"></script>
+    <script src="/js/custom.js"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <ul class="footer-menu d-flex flex-wrap">
+        <%if(siteData){%>
+            <%for(let i=0;i < siteData.length; i++){%>
+                <li class="footer-menu-item">
+                    <a class="footer-menu-link" href="<%=siteData[i].dataValues.route%>">
+                        <%=siteData[i].dataValues.name%>
+                    </a>
+                    </l1>
+                    <%}%>
+                        <%} else{%>
+                            <h1>No Data Found !!!!</h1>
+                            <%}%>
+    </ul>
+</body>
+
+</html>

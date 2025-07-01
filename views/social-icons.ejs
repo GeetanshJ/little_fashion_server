@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul class="social-icon">
+      <%if(socialMediaData){%> <%for(let i=0;i < socialMediaData.length; i++){%>
+      <li>
+        <a href="<%=socialMediaData[i].link%>" class="social-icon-link <%=socialMediaData[i].name%>"></a>
+      </li>
+      <%}%> <%} else{%>
+      <h1>No Data Found !!!!</h1>
+      <%}%>
+    </ul>
+
+    <ul class="footer-menu d-flex flex-wrap"></ul>
+  </body>
+</html>
